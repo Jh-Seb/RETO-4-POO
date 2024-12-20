@@ -1,6 +1,10 @@
 # RETO-4-POO
 
-SHAPE
+
+
+# SHAPE
+
+
 El código trabajado en clase implementa un sistema jerárquico para representar formas geométricas mediante herencia y polimorfismo. Define una clase base Shape que incluye atributos genéricos como vértices, aristas y ángulos internos, así como métodos para calcular área, perímetro y ángulos internos. Sobre esta base, se crean clases específicas como Rectangle, Square, y diversas variantes de triángulos (Triangle, Scalene, Equilateral, Isosceles, y TriRectangle). Estas clases especializadas implementan los métodos de cálculo y personalizan atributos según las propiedades de cada forma. También incluye clases auxiliares como Point para coordenadas y Line para representar aristas. El sistema es flexible y permite modelar y calcular propiedades geométricas de diferentes formas.
 ``` python
 import math
@@ -275,7 +279,9 @@ Triangle:
 
 ```
 
-RESTAURANTE
+# RESTAURANTE
+
+
 El código implementa un sistema de gestión de menús y órdenes para un restaurante utilizando herencia, encapsulamiento y polimorfismo. Define una clase base MenuItem con atributos comunes como el nombre y el precio, y clases derivadas (Beverage, Appetizer y MainCourse) que añaden características específicas como tamaño, ingredientes, y tipo. La clase Order permite agregar o eliminar platos y calcular el precio total, aplicando un descuento a las bebidas si la orden incluye un plato principal. Además, la clase Payment gestiona el procesamiento de pagos, asociando un método de pago con una orden. Este diseño modular permite organizar y gestionar fácilmente un menú, procesar órdenes y aplicar reglas comerciales específicas, como descuentos.
 ``` python
 class MenuItem:
