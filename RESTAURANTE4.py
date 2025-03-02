@@ -1,139 +1,119 @@
 class MenuItem:
     def __init__(self, name, price):
-        self._name = name
-        self._price = price
+        self.__name = name
+        self.__price = price
 
-    @property
-    def name(self):
-        return self._name
+    def get_name(self):
+        return self.__name
 
-    @name.setter
-    def name(self, value):
-        self._name = value
+    def set_name(self, name):
+        self.__name = name
 
-    @property
-    def price(self):
-        return self._price
+    def get_price(self):
+        return self.__price
 
-    @price.setter
-    def price(self, value):
-        self._price = value
-
+    def set_price(self, price):
+        self.__price = price
 
 class Beverage(MenuItem):
     def __init__(self, name, price, size, is_cold, has_ice):
         super().__init__(name, price)
-        self._size = size
-        self._is_cold = is_cold
-        self._has_ice = has_ice
+        self.__size = size
+        self.__is_cold = is_cold
+        self.__has_ice = has_ice
 
-    @property
-    def size(self):
-        return self._size
+    def get_size(self):
+        return self.__size
 
-    @size.setter
-    def size(self, value):
-        self._size = value
+    def set_size(self, size):
+        self.__size = size
 
-    @property
-    def is_cold(self):
-        return self._is_cold
+    def get_is_cold(self):
+        return self.__is_cold
 
-    @is_cold.setter
-    def is_cold(self, value):
-        self._is_cold = value
+    def set_is_cold(self, is_cold):
+        self.__is_cold = is_cold
 
-    @property
-    def has_ice(self):
-        return self._has_ice
+    def get_has_ice(self):
+        return self.__has_ice
 
-    @has_ice.setter
-    def has_ice(self, value):
-        self._has_ice = value
+    def set_has_ice(self, has_ice):
+        self.__has_ice = has_ice
 
     def __str__(self):
-        return (
-            f"{self.name} (Price: {self.price}, Size: {self.size}, "
-            f"Cold: {self.is_cold}, Ice: {self.has_ice})"
+        return "{} (Price: {}, Size: {}, Cold: {}, Ice: {})".format(
+            self.get_name(), self.get_price(), self.__size, self.__is_cold, self.__has_ice
         )
-
 
 class Appetizer(MenuItem):
     def __init__(self, name, price, appetizer_type):
         super().__init__(name, price)
-        self._appetizer_type = appetizer_type
+        self.__appetizer_type = appetizer_type
 
-    @property
-    def appetizer_type(self):
-        return self._appetizer_type
+    def get_appetizer_type(self):
+        return self.__appetizer_type
 
-    @appetizer_type.setter
-    def appetizer_type(self, value):
-        self._appetizer_type = value
+    def set_appetizer_type(self, appetizer_type):
+        self.__appetizer_type = appetizer_type
 
     def __str__(self):
-        return f"{self.name} (Price: {self.price}, Type: {self.appetizer_type})"
-
+        return "{} (Price: {}, Type: {})".format(
+            self.get_name(), self.get_price(), self.__appetizer_type
+        )
 
 class MainCourse(MenuItem):
     def __init__(self, name, price, ingredients, salad):
         super().__init__(name, price)
-        self._ingredients = ingredients
-        self._salad = salad
+        self.__ingredients = ingredients
+        self.__salad = salad
 
-    @property
-    def ingredients(self):
-        return self._ingredients
+    def get_ingredients(self):
+        return self.__ingredients
 
-    @ingredients.setter
-    def ingredients(self, value):
-        self._ingredients = value
+    def set_ingredients(self, ingredients):
+        self.__ingredients = ingredients
 
-    @property
-    def salad(self):
-        return self._salad
+    def get_salad(self):
+        return self.__salad
 
-    @salad.setter
-    def salad(self, value):
-        self._salad = value
+    def set_salad(self, salad):
+        self.__salad = salad
 
     def __str__(self):
-        return (
-            f"{self.name} (Price: {self.price}, Ingredients: {self.ingredients}, "
-            f"Salad: {self.salad})"
+        return "{} (Price: {}, Ingredients: {}, Salad: {})".format(
+            self.get_name(), self.get_price(), self.__ingredients, self.__salad
         )
-
 
 class Order:
     def __init__(self):
-        self.plates = []
+        self.__plates = []  # Lista de platos
 
     def add_plate(self, plate):
-        self.plates.append(plate)
+        self.__plates.append(plate)
 
     def remove_plate(self, plate):
-        self.plates.remove(plate)
-
-    def total(self):
-        return self.calculate_total_price()
+        try:
+            self.__plates.remove(plate)
+        except ValueError as e:
+            print("Error al eliminar el plato:", e)
 
     def calculate_total_price(self):
-        total = sum(plate.price for plate in self.plates)
-        has_main_course = any(isinstance(plate, MainCourse) for plate in self.plates)
+        total = sum(plate.get_price() for plate in self.__plates)
+        has_main_course = any(isinstance(plate, MainCourse) for plate in self.__plates)
         if has_main_course:
-            discount = sum(
-                plate.price * 0.1 for plate in self.plates if isinstance(plate, Beverage)
-            )
+            discount = sum(plate.get_price() * 0.1 for plate in self.__plates if isinstance(plate, Beverage))
             total -= discount
         return total
 
     def get_plate_details(self):
-        return [str(plate) for plate in self.plates]
+        return [str(plate) for plate in self.__plates]
+
+    def total(self):
+        return self.calculate_total_price()
 
     def __str__(self):
-        plate_details = "\n".join(self.get_plate_details())
-        return f"Order:\n{plate_details}\nTotal: {self.total()}"
-
+        details = "\n".join(self.get_plate_details())
+        return "Order:\n" + details + "\nTotal: " + str(self.calculate_total_price())
 
 class Payment:
     def __init__(self, order, payment_method):
@@ -141,11 +121,8 @@ class Payment:
         self.payment_method = payment_method
 
     def process_payment(self):
-        print(
-            f"Processing payment of {self.order.total()} using {self.payment_method}..."
-        )
+        print("Processing payment of {} using {}...".format(self.order.total(), self.payment_method))
         print("Payment successful!")
-
 
 # Test del sistema
 order = Order()
